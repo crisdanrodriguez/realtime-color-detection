@@ -1,5 +1,6 @@
 __pycache__/
 *.py[cod]
+.Python
 .DS_Store
 .venv/
 venv/
@@ -8,11 +9,15 @@ build/
 dist/
 *.log
 .coverage
+.coverage.*
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
 .tox/
 .env
 .idea/
 .vscode/
+.ipynb_checkpoints/
 *.swp
 *.swo
 *~

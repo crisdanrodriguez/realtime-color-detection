@@ -30,6 +30,11 @@ dependencies = [
   "opencv-python>=4.9,<5.0",
 ]
 
+[project.optional-dependencies]
+dev = [
+  "pytest>=8,<9",
+]
+
 [project.urls]
 Homepage = "https://github.com/crisdanrodriguez/realtime-color-detection"
 Repository = "https://github.com/crisdanrodriguez/realtime-color-detection"
@@ -39,3 +44,6 @@ realtime-color-detection = "realtime_color_detection:main"
 
 [tool.setuptools]
 packages = ["realtime_color_detection"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
