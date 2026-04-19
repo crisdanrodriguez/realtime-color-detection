@@ -1,10 +1,28 @@
 # Real-Time Color Detection
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
-[![OpenCV](https://img.shields.io/badge/OpenCV-4.x-green.svg)](https://opencv.org/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](./LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![OpenCV 4.x](https://img.shields.io/badge/OpenCV-4.x-green.svg)](https://opencv.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Tests](https://github.com/crisdanrodriguez/realtime-color-detection/actions/workflows/tests.yml/badge.svg)](https://github.com/crisdanrodriguez/realtime-color-detection/actions/workflows/tests.yml)
+[![PyPI version](https://badge.fury.io/py/realtime-color-detection.svg)](https://pypi.org/project/realtime-color-detection/)
 
-A polished OpenCV project for detecting colors in real time with a webcam using the HSV color space.
+A polished OpenCV project for detecting colors in real time with a webcam using the HSV color space. Perfect for computer vision prototyping, HSV calibration, and educational purposes.
+
+## Table of Contents
+
+- [Preview](#preview)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Command-Line Options](#command-line-options)
+- [Controls](#controls)
+- [Notes About HSV](#notes-about-hsv)
+- [Troubleshooting](#troubleshooting)
+- [Development](#development)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Preview
 
@@ -15,63 +33,81 @@ This tool is useful for:
 - Calibrating HSV ranges for computer vision projects
 - Experimenting with masks and thresholding in real time
 - Building quick prototypes for object or color-based tracking
+- Educational demonstrations of computer vision concepts
 
 ## Features
 
-- Live webcam capture with optional resolution settings
-- Interactive HSV controls with OpenCV trackbars
-- Full-range HSV startup so the feed is visible before calibration
-- Three simultaneous views: original feed, binary mask, and filtered result
-- Optional blur and mask cleanup for more stable detection
-- On-screen overlay with current HSV values and mask coverage
-- Reset shortcut for quickly returning to the initial color range
+- **Live webcam capture** with optional resolution settings
+- **Interactive HSV controls** with OpenCV trackbars
+- **Full-range HSV startup** so the feed is visible before calibration
+- **Three simultaneous views**: original feed, binary mask, and filtered result
+- **Optional blur and mask cleanup** for more stable detection
+- **On-screen overlay** with current HSV values and mask coverage
+- **Reset shortcut** for quickly returning to the initial color range
+- **Cross-platform support** (Windows, macOS, Linux)
+- **Camera backend selection** for better compatibility
 
 ## Project Structure
 
-```text
+```
 .
+├── .github/
+│   ├── ISSUE_TEMPLATE/
+│   │   ├── bug_report.md
+│   │   └── feature_request.md
+│   ├── pull_request_template.md
+│   └── workflows/
+│       └── tests.yml
 ├── assets/
+│   └── demo.png
+├── realtime_color_detection/
+│   ├── __init__.py
+│   └── __main__.py
+├── test_basic.py
+├── .editorconfig
+├── .gitattributes
+├── .gitignore
 ├── LICENSE
 ├── pyproject.toml
-├── realtime_color_detection/
+├── README.md
 ├── realtime_color_detection.py
-├── requirements.txt
-└── README.md
+└── requirements.txt
 ```
 
 ## Requirements
 
-- Python 3.10+
+- Python 3.10 or higher
 - A working webcam
+- Dependencies: NumPy, OpenCV
 
 ## Installation
 
 Make sure you run the following commands from the project root, the same directory that contains `pyproject.toml`.
 
-Recommended installation:
+### Recommended Installation
 
 ```bash
 cd realtime-color-detection
 python3 -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install .
 ```
 
-Development installation:
+### Development Installation
 
 ```bash
 cd realtime-color-detection
 python3 -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -e .
 ```
 
-Alternative installation with `requirements.txt`:
+### Alternative Installation
 
 ```bash
 cd realtime-color-detection
 python3 -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
@@ -83,9 +119,9 @@ Run the application with the default webcam:
 realtime-color-detection
 ```
 
-The app now starts with the full HSV range enabled, so the filtered result should look like the original feed until you narrow the sliders.
+The app starts with the full HSV range enabled, so the filtered result should look like the original feed until you narrow the sliders.
 
-Example with custom settings:
+### Example with Custom Settings
 
 ```bash
 realtime-color-detection \
@@ -99,13 +135,15 @@ realtime-color-detection \
   --morph-kernel 5
 ```
 
-You can still run it directly as a script if you prefer:
+### Alternative Ways to Run
+
+As a script:
 
 ```bash
 python3 realtime_color_detection.py
 ```
 
-Or as a module from the project root:
+As a module:
 
 ```bash
 python3 -m realtime_color_detection
@@ -113,40 +151,100 @@ python3 -m realtime_color_detection
 
 ## Command-Line Options
 
-| Option | Description |
-| --- | --- |
-| `--camera` | Camera index used by OpenCV. |
-| `--width` | Requested capture width. |
-| `--height` | Requested capture height. |
-| `--backend` | Camera backend: `auto`, `any`, or `avfoundation`. |
-| `--lower-hsv` | Initial lower HSV value in `H,S,V` format. |
-| `--upper-hsv` | Initial upper HSV value in `H,S,V` format. |
-| `--blur-kernel` | Gaussian blur kernel size before masking. |
-| `--morph-kernel` | Morphological cleanup kernel size for the mask. |
-| `--no-mirror` | Disables horizontal mirroring of the camera feed. |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--camera` | Camera index used by OpenCV | 0 |
+| `--width` | Requested capture width in pixels | None |
+| `--height` | Requested capture height in pixels | None |
+| `--backend` | Preferred OpenCV camera backend (`auto`, `any`, `avfoundation`) | auto |
+| `--lower-hsv` | Initial lower HSV bound (format: H,S,V) | 0,0,0 |
+| `--upper-hsv` | Initial upper HSV bound (format: H,S,V) | 179,255,255 |
+| `--blur-kernel` | Gaussian blur kernel size before masking | 5 |
+| `--morph-kernel` | Morphological cleanup kernel size for the mask | 5 |
+| `--no-mirror` | Disable horizontal mirroring of the webcam feed | False |
 
 ## Controls
 
-- `q`: quit the application
-- `r`: reset the trackbars to the initial HSV values
+- **`q`**: Quit the application
+- **`r`**: Reset the trackbars to the initial HSV values
 
 ## Notes About HSV in OpenCV
 
 OpenCV uses the following HSV ranges:
 
-- Hue: `0-179`
-- Saturation: `0-255`
-- Value: `0-255`
+- **Hue**: `0-179` (not 0-360 like some other systems)
+- **Saturation**: `0-255`
+- **Value**: `0-255`
+
+### Tips for Better Detection
 
 If your mask is not detecting the target color correctly:
 
-- Increase the upper range gradually
+- Gradually increase the upper range
 - Lower the minimum saturation/value if the object is dull or poorly lit
 - Adjust lighting conditions to reduce reflections and noise
+- Use the blur kernel to reduce noise in the mask
+- Apply morphological operations for cleaner masks
 
 ## Troubleshooting
 
-If `pip install -e .` succeeds but the command `realtime-color-detection` fails with `ModuleNotFoundError`, your virtual environment may not be resolving editable installs correctly. In that case, use a standard installation instead:
+### ModuleNotFoundError After Installation
+
+If `pip install -e .` succeeds but `realtime-color-detection` fails with `ModuleNotFoundError`, your virtual environment may not be resolving editable installs correctly. Use standard installation instead:
+
+```bash
+pip install .
+```
+
+### Camera Issues
+
+- **Black frames**: Check camera permissions in your OS settings
+- **Camera not found**: Try different camera indices (`--camera 1`, `--camera 2`)
+- **Backend issues**: Try `--backend any` or `--backend avfoundation` (on macOS)
+
+### Permission Issues on macOS
+
+Ensure camera permissions are granted in System Settings > Privacy & Security > Camera.
+
+## Development
+
+### Running Tests
+
+```bash
+pip install pytest
+pytest test_basic.py -v
+```
+
+### Building the Package
+
+```bash
+python -m build
+```
+
+### Code Quality
+
+This project uses:
+- Black for code formatting
+- isort for import sorting
+- flake8 for linting
+- mypy for type checking
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+### Development Setup
+
+1. Fork the repository
+2. Clone your fork: `git clone https://github.com/yourusername/realtime-color-detection.git`
+3. Create a virtual environment: `python3 -m venv .venv`
+4. Activate it: `source .venv/bin/activate`
+5. Install in development mode: `pip install -e .`
+6. Run tests: `pytest`
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ```bash
 pip install .

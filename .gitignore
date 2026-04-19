@@ -5,3 +5,14 @@ __pycache__/
 venv/
 build/
 *.egg-info/
+dist/
+*.log
+.coverage
+.pytest_cache/
+.tox/
+.env
+.idea/
+.vscode/
+*.swp
+*.swo
+*~

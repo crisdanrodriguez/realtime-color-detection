@@ -1,0 +1,14 @@
+# Auto detect text files and perform LF normalization
+* text=auto eol=lf
+
+# Python
+*.py text eol=lf
+
+# Markdown
+*.md text eol=lf
+
+# YAML
+*.{yml,yaml} text eol=lf
+
+# Images
+*.{png,jpg,jpeg,gif,svg} -text
