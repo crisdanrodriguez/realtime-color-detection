@@ -1,9 +1,9 @@
 # Real-Time Color Detection
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![OpenCV](https://img.shields.io/badge/OpenCV-4.x-5C3EE8?logo=opencv&logoColor=white)](https://opencv.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-111111.svg)](LICENSE)
-[![Tests](https://github.com/crisdanrodriguez/realtime-color-detection/actions/workflows/tests.yml/badge.svg)](https://github.com/crisdanrodriguez/realtime-color-detection/actions/workflows/tests.yml)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-0A66C2?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![OpenCV](https://img.shields.io/badge/OpenCV-4.x-0A66C2?style=flat-square&logo=opencv&logoColor=white)](https://opencv.org/)
+[![Tests](https://img.shields.io/github/actions/workflow/status/crisdanrodriguez/realtime-color-detection/tests.yml?branch=main&style=flat-square&logo=githubactions&logoColor=white&label=Tests)](https://github.com/crisdanrodriguez/realtime-color-detection/actions/workflows/tests.yml)
+[![License](https://img.shields.io/badge/License-MIT-0A66C2?style=flat-square&logo=opensourceinitiative&logoColor=white)](https://github.com/crisdanrodriguez/realtime-color-detection/blob/main/LICENSE)
 
 Lightweight OpenCV CLI for calibrating HSV color ranges in real time from a webcam feed.
 
