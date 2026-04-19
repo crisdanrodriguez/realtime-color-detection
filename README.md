@@ -2,8 +2,8 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![OpenCV](https://img.shields.io/badge/OpenCV-4.x-5C3EE8?logo=opencv&logoColor=white)](https://opencv.org/)
-[![Tests](https://github.com/crisdanrodriguez/realtime-color-detection/actions/workflows/tests.yml/badge.svg)](https://github.com/crisdanrodriguez/realtime-color-detection/actions/workflows/tests.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-111111.svg)](LICENSE)
+[![Tests](https://github.com/crisdanrodriguez/realtime-color-detection/actions/workflows/tests.yml/badge.svg)](https://github.com/crisdanrodriguez/realtime-color-detection/actions/workflows/tests.yml)
 
 Lightweight OpenCV CLI for calibrating HSV color ranges in real time from a webcam feed.
 
