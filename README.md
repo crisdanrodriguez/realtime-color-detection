@@ -3,8 +3,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![OpenCV 4.x](https://img.shields.io/badge/OpenCV-4.x-green.svg)](https://opencv.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Tests](https://github.com/crisdanrodriguez/realtime-color-detection/actions/workflows/tests.yml/badge.svg)](https://github.com/crisdanrodriguez/realtime-color-detection/actions/workflows/tests.yml)
-[![PyPI version](https://badge.fury.io/py/realtime-color-detection.svg)](https://pypi.org/project/realtime-color-detection/)
+[![Tests](https://github.com/crisdanrodriguez/realtime-color-detection/workflows/Tests/badge.svg)](https://github.com/crisdanrodriguez/realtime-color-detection/actions/workflows/tests.yml)
 
 A polished OpenCV project for detecting colors in real time with a webcam using the HSV color space. Perfect for computer vision prototyping, HSV calibration, and educational purposes.
 
@@ -245,10 +244,6 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-```bash
-pip install .
-```
 
 If the application opens but the camera looks completely black:
 
