@@ -6,6 +6,10 @@
 
 A polished OpenCV project for detecting colors in real time with a webcam using the HSV color space.
 
+## Preview
+
+![Application demo](assets/demo.png)
+
 This tool is useful for:
 
 - Calibrating HSV ranges for computer vision projects
@@ -26,6 +30,7 @@ This tool is useful for:
 
 ```text
 .
+├── assets/
 ├── LICENSE
 ├── pyproject.toml
 ├── realtime_color_detection/
