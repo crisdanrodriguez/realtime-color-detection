@@ -20,7 +20,6 @@ A polished OpenCV project for detecting colors in real time with a webcam using 
 - [Notes About HSV](#notes-about-hsv)
 - [Troubleshooting](#troubleshooting)
 - [Development](#development)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Preview
@@ -228,30 +227,16 @@ This project uses:
 - flake8 for linting
 - mypy for type checking
 
-## Contributing
+### AI-Enhanced Development
 
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+This repository was significantly improved and documented using AI assistance. GitHub Copilot and similar AI tools were used to:
+- Generate comprehensive unit tests and CI/CD pipelines
+- Create professional documentation and README structure
+- Implement best practices for Python packaging and project organization
+- Add configuration files for consistent code formatting and Git attributes
+- Develop GitHub templates for issues and pull requests
 
-### Development Setup
-
-1. Fork the repository
-2. Clone your fork: `git clone https://github.com/yourusername/realtime-color-detection.git`
-3. Create a virtual environment: `python3 -m venv .venv`
-4. Activate it: `source .venv/bin/activate`
-5. Install in development mode: `pip install -e .`
-6. Run tests: `pytest`
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-If the application opens but the camera looks completely black:
-
-- Confirm macOS camera permission in `System Settings > Privacy & Security > Camera`
-- Close Zoom, Meet, Photo Booth, or any other app that may be using the webcam
-- Try another camera index, for example `realtime-color-detection --camera 1`
-- Try another backend, for example `realtime-color-detection --backend any`
-- Press `r` to reset the HSV range if you moved the sliders into a range that hides everything
+AI tools helped accelerate the professionalization process while ensuring adherence to modern development standards and community best practices.
 
 ## License
 
