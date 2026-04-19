@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "realtime-color-detection"
+version = "0.1.0"
+description = "Real-time HSV color detection with OpenCV and a webcam feed."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+authors = [
+  { name = "Crisdan Rodriguez" }
+]
+keywords = ["opencv", "computer-vision", "color-detection", "hsv", "webcam"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Image Processing",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+  "numpy>=1.26,<3.0",
+  "opencv-python>=4.9,<5.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/crisdanrodriguez/realtime-color-detection"
+Repository = "https://github.com/crisdanrodriguez/realtime-color-detection"
+
+[project.scripts]
+realtime-color-detection = "realtime_color_detection:main"
+
+[tool.setuptools]
+packages = ["realtime_color_detection"]
