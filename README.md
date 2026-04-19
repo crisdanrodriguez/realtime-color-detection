@@ -48,7 +48,7 @@ This tool is useful for:
 ## Project Structure
 
 ```
-.
+realtime-color-detection
 ├── .github/
 │   ├── ISSUE_TEMPLATE/
 │   │   ├── bug_report.md
