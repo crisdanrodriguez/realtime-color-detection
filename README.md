@@ -1,80 +1,98 @@
 # Real-Time Color Detection
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-0A66C2?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
-[![OpenCV](https://img.shields.io/badge/OpenCV-4.x-0A66C2?style=flat-square&logo=opencv&logoColor=white)](https://opencv.org/)
-[![Tests](https://img.shields.io/github/actions/workflow/status/crisdanrodriguez/realtime-color-detection/tests.yml?branch=main&style=flat-square&logo=githubactions&logoColor=white&label=Tests)](https://github.com/crisdanrodriguez/realtime-color-detection/actions/workflows/tests.yml)
-[![License](https://img.shields.io/badge/License-MIT-0A66C2?style=flat-square&logo=opensourceinitiative&logoColor=white)](https://github.com/crisdanrodriguez/realtime-color-detection/blob/main/LICENSE)
+A Python/OpenCV command-line tool for tuning HSV color thresholds against a live webcam feed.
 
-Lightweight OpenCV CLI for calibrating HSV color ranges in real time from a webcam feed.
+[![Tests](https://github.com/crisdanrodriguez/realtime-color-detection/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/crisdanrodriguez/realtime-color-detection/actions/workflows/tests.yml) [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)](https://www.python.org/) [![OpenCV](https://img.shields.io/badge/OpenCV-4.x-blue?logo=opencv)](https://opencv.org/) [![License: MIT](https://img.shields.io/badge/License-MIT-blue)](LICENSE) [![Last commit](https://img.shields.io/github/last-commit/crisdanrodriguez/realtime-color-detection?branch=main)](https://github.com/crisdanrodriguez/realtime-color-detection/commits/main/)
 
-## Table of Contents
+**Created:** 2022-01-27 | **Last Updated:** 2026-04-19
 
-- [Overview](#overview)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Results](#results)
-- [Documentation](#documentation)
-- [Development](#development)
-- [License](#license)
-- [AI Assistance and Last Updated](#ai-assistance-and-last-updated)
+The dates are GitHub repository creation and latest default-branch commit dates as checked for this README; the last-commit badge updates dynamically.
 
 ## Overview
 
-This repository contains a small Python application for interactive HSV tuning with OpenCV. It is designed for computer vision prototyping, quick webcam-based experiments, and educational demos where seeing the live mask and filtered result is more useful than building a larger pipeline.
+This project provides an interactive way to select HSV bounds for color masking. It is intended for computer vision prototyping and learning: a webcam feed, binary mask, and filtered image are displayed side by side so changes to the thresholds can be inspected immediately.
 
-Current scope:
+The application uses OpenCV trackbars for calibration and applies the selected range to each camera frame. It is a local, camera-based utility; the repository does not include a dataset, trained model, or object tracking pipeline.
 
-- Real-time webcam capture
-- Interactive HSV trackbars
-- Live mask and filtered output windows
-- Optional blur and morphological cleanup
-- CLI options for camera backend, resolution, and initial HSV bounds
+## Key Features
 
-## Installation
+- Adjust lower and upper HSV bounds with live trackbars or set their initial values through the CLI.
+- View the annotated camera feed, binary mask, filtered result, and HSV controls in separate windows.
+- Apply optional Gaussian blur and morphological opening and closing to reduce mask noise.
+- Select a camera index and backend, request capture dimensions, and disable the default horizontal mirror.
+- Reset the sliders to the initial CLI bounds with `r`; quit with `q`.
 
-Requirements:
+## Tech Stack
 
-- Python 3.10+
-- A working webcam
+- **Language:** Python 3.10 or newer
+- **Libraries:** OpenCV 4.x (`opencv-python`) and NumPy
+- **Packaging and tests:** setuptools and pytest
+- **CI:** GitHub Actions runs unit tests on Python 3.10, 3.11, and 3.12
 
-Recommended setup:
+## Methodology
+
+For each captured frame, the application optionally mirrors and blurs the image, converts it from BGR to HSV, and thresholds it with the current trackbar values. Optional morphological opening and closing clean the binary mask. OpenCV then uses the mask to display only the matching pixels from the original frame. The feed overlay shows the active bounds, mask coverage, and camera backend.
+
+On macOS, automatic backend selection tries AVFoundation before OpenCV's default backend. The app checks that the selected camera delivers frames and warns when frames remain very dark. See the [implementation notes](docs/implementation-notes.md) for the runtime flow.
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.10 or newer
+- A working webcam, camera access permission, and a desktop environment that can display OpenCV windows
+
+### Install
+
+From the repository root:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install .
+python -m pip install .
 ```
 
-Development setup:
+For development, install the test dependency instead:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -e .[dev]
+python -m pip install -e '.[dev]'
 ```
 
-Alternative runtime install:
+Alternatively, install the runtime libraries without installing the package:
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
-## Usage
+In that case, use the module command below from the repository root.
 
-Run the packaged CLI:
+### Run
 
 ```bash
 realtime-color-detection
 ```
 
-Run as a module:
+Alternatively:
 
 ```bash
 python -m realtime_color_detection
 ```
 
-Example with custom options:
+### Run tests
+
+After installing the development dependencies:
+
+```bash
+python -m pytest -v
+```
+
+The tests cover the argument parser and HSV utilities. They do not exercise webcam capture or the OpenCV GUI.
+
+## Usage
+
+Start with the default camera and adjust the six HSV sliders while watching the mask and filtered result. Press `r` to restore the bounds supplied at startup (or the full HSV range if no bounds were supplied), and `q` to exit.
+
+For example, to start with a narrower HSV range and request a capture size:
 
 ```bash
 realtime-color-detection \
@@ -88,73 +106,33 @@ realtime-color-detection \
   --morph-kernel 5
 ```
 
-Controls:
-
-- `q` closes the application
-- `r` resets the HSV sliders to the initial range
+These values are example initial settings, not calibrated values for a particular camera or scene. OpenCV requests the specified capture size; the camera may use a different supported size. Use `--backend any` to select OpenCV's default backend, or `--backend avfoundation` on a system that supports it. Use `--no-mirror` to keep the camera's original orientation. Run `realtime-color-detection --help` for all options.
 
 ## Project Structure
 
 ```text
-realtime-color-detection/
-├── .github/
-│   ├── ISSUE_TEMPLATE/
-│   └── workflows/
-├── docs/
-│   ├── demo.png
-│   └── implementation-notes.md
-├── realtime_color_detection/
-│   ├── __init__.py
-│   ├── __main__.py
-│   └── app.py
-├── tests/
-│   └── test_core.py
-├── .editorconfig
-├── .gitattributes
-├── .gitignore
-├── LICENSE
-├── pyproject.toml
-├── README.md
-└── requirements.txt
+realtime_color_detection/     Application loop, CLI, camera handling, and HSV processing
+tests/test_core.py            Parser and utility tests
+docs/demo.png                 Existing application screenshot
+docs/implementation-notes.md Runtime flow and scope
+pyproject.toml                Package metadata, dependencies, and CLI entry point
+requirements.txt              Runtime library requirements
+.github/workflows/tests.yml   Unit test workflow
+LICENSE                       MIT license
 ```
 
-## Results
+## Demonstration
 
-Demo preview:
+The [existing screenshot](docs/demo.png) shows the camera feed, HSV controls, mask, and filtered output with one set of manually selected thresholds. It is an illustrative example, not a measured accuracy or performance result.
 
-![Application demo](docs/demo.png)
+![OpenCV windows showing a webcam feed, HSV controls, binary mask, and filtered output](docs/demo.png)
 
-The application opens separate windows for the original feed, the binary mask, and the filtered output, making it practical for HSV threshold calibration and quick visual debugging.
+## Project Status
 
-## Documentation
+This is a small, functional prototype for interactive webcam-based HSV calibration. Automated tests cover non-GUI behavior; camera access and visual output depend on local hardware, permissions, and lighting and are not validated by CI.
 
-- [Implementation Notes](docs/implementation-notes.md)
-
-## Development
-
-Run tests:
-
-```bash
-pytest -v
-```
-
-Build the package:
-
-```bash
-python -m build
-```
-
-Notes:
-
-- The automated test suite focuses on parser and utility behavior.
-- Camera access is intentionally not exercised in CI because it depends on local hardware and OS permissions.
+AI tools assisted with repository structure, packaging, tests, and documentation, as disclosed in the previous README.
 
 ## License
 
-This project is released under the [MIT License](LICENSE).
-
-## AI Assistance and Last Updated
-
-AI tools were used to help refine repository structure, packaging, tests, and documentation. All documentation in this repository is intended to reflect the current state of the codebase rather than aspirational features.
-
-Last updated: 2026-04-19
+Released under the [MIT License](LICENSE).
