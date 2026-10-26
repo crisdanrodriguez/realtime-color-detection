@@ -6,8 +6,6 @@ A Python/OpenCV command-line tool for tuning HSV color thresholds against a live
 
 **Created:** 2022-01-27 | **Last Updated:** 2026-04-19
 
-The dates are GitHub repository creation and latest default-branch commit dates as checked for this README; the last-commit badge updates dynamically.
-
 ## Overview
 
 This project provides an interactive way to select HSV bounds for color masking. It is intended for computer vision prototyping and learning: a webcam feed, binary mask, and filtered image are displayed side by side so changes to the thresholds can be inspected immediately.
